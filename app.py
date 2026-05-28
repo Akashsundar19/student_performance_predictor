@@ -2,18 +2,18 @@ import streamlit as st
 import pickle
 import numpy as np
 
-# Page Configuration
+
 st.set_page_config(
     page_title="Student Performance Predictor",
     page_icon="🎓",
     layout="centered"
 )
 
-# Load Model
+
 model = pickle.load(open('student_model.pkl', 'rb'))
 encoder = pickle.load(open('label_encoder.pkl', 'rb'))
 
-# Custom CSS
+
 st.markdown("""
     <style>
 
@@ -64,7 +64,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Header
+
 st.markdown('<div class="title">🎓 Student Performance Predictor</div>', unsafe_allow_html=True)
 
 st.markdown(
@@ -72,7 +72,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Input Section
+
 st.subheader("📋 Enter Student Details")
 
 col1, col2 = st.columns(2)
@@ -88,7 +88,7 @@ with col2:
 
 st.write("")
 
-# Prediction Button
+
 if st.button("🚀 Predict Performance"):
 
     input_data = np.array([[
@@ -102,7 +102,7 @@ if st.button("🚀 Predict Performance"):
     prediction = model.predict(input_data)
     result = encoder.inverse_transform(prediction)
 
-    # LOW RISK
+    
     if result[0] == "Low Risk":
 
         st.markdown(f"""
@@ -118,7 +118,7 @@ if st.button("🚀 Predict Performance"):
 
         st.balloons()
 
-    # MEDIUM RISK
+    
     elif result[0] == "Medium Risk":
 
         st.markdown(f"""
@@ -132,7 +132,7 @@ if st.button("🚀 Predict Performance"):
         </div>
         """, unsafe_allow_html=True)
 
-    # HIGH RISK
+    
     else:
 
         st.markdown(f"""
@@ -146,7 +146,7 @@ if st.button("🚀 Predict Performance"):
         </div>
         """, unsafe_allow_html=True)
 
-# Footer
+
 st.write("")
 st.write("---")
 st.caption("Built using Python, Scikit-learn and Streamlit")
